@@ -4,32 +4,32 @@ const { Node } = require("../extensions/list-tree.js");
 
 module.exports = class BinarySearchTree {
   constructor() {
-    this.root = null;
+    this.rootValue = null;
   }
   root() {
-    return this.root;
+    return this.rootValue;
   }
 
   add(data) {
-    this.root = addNewNode(this.root, data);
-    function addNewNode(root, newValue) {
-      if (!root) {
+    this.rootValue = addNewNode(this.rootValue, data);
+    function addNewNode(rootData, newValue) {
+      if (!rootData) {
         return new Node(newValue);
       }
-      if (root.data === newValue) {
-        return root;
+      if (rootData.data === newValue) {
+        return rootData;
       }
-      if (newValue < root.data) {
-        root.left = addNewNode(root.left, newValue);
+      if (newValue < rootData.data) {
+        rootData.left = addNewNode(rootData.left, newValue);
       } else {
-        root.right = addNewNode(root.right, newValue);
+        rootData.right = addNewNode(rootData.right, newValue);
       }
-      return root;
+      return rootData;
     }
   }
 
   has(data, getInclide = false) {
-    return hasIn(this.root, data);
+    return hasIn(this.rootValue, data);
     function hasIn(node, value) {
       if (!node) {
         return false;
@@ -49,7 +49,25 @@ module.exports = class BinarySearchTree {
 
   remove(data) {}
 
-  min() {}
+  min() {
+    if (!this.rootValue) {
+      return;
+    }
+    let minValue = this.rootValue;
+    while (minValue.left != undefined) {
+      minValue = minValue.left;
+    }
+    return minValue.data;
+  }
 
-  max() {}
+  max() {
+    if (!this.rootValue) {
+      return;
+    }
+    let maxValue = this.root;
+    while (maxValue.right != undefined) {
+      maxValue = maxValue.right;
+    }
+    return maxValue.data;
+  }
 };
